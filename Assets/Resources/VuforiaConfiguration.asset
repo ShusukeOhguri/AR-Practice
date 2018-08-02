@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Name: VuforiaConfiguration
   m_EditorClassIdentifier: 
   vuforia:
-    vuforiaLicenseKey: 
+    vuforiaLicenseKey: AfK85xj/////AAABGdwPB534hE+Ql6tcNajWiCAaFscq5+xUW6e7Y+fuWLLxgzXKHi9fTKx2jLPg6iC38IojAjZFBnbm5VvcXFXSPFfs9HbEMwvT/Bf6k3OuLuOaEkZ6oVVHWlmv7nD8cfbHZbGgT569KLDuNh/6KzueKt2X6oyYMdUgNbGM09TooU3289qW+OxdfvnAqaKdEfrjtK04tPq/PQu2jQn16guM06iIXF5F14OQv5xtbf5mjwrwMaXhbwF0evndv/nCQ9xheh0eXgUBvMmjMpBc7T7gYmm0qFVwwOFLYZOOHjKiybyj3xxz+JQAE00QZC9QOUBAsAYPc55RRH5vtwZLzxJrZ0uxO3j/0jNU3kgHRTmpMVTA
     ufoLicenseKey: QWZEdTlsRC8vLy8vQUFBQUtKWWhvNjZjNkVZYnZNQUdnT3dERWVWVTV6djdOazd6K0liN3ROcVRxbGxFczg4cmxNa2V2TCtYT1JNQlJCaFg0NTZnYlJETGI5MkNBSjltUmE3MWRnOGpKUU1iU3BGYWtCdzMrTS8yUjNEU3BWdytkZHFYNmw0M3VkRW01TVNkbFUxb3JzZkFoTTBFcndzeC83LzYyZXIyU1RyS2VLK0h3eThlSkp6M3pGNzV0ZkxWZEo2OG5qWDhlOGplMjdWcHlvUXhnaFIycjl6WHp5ZFdPUjJKWEozN0NzVVdvbVN5eC9CQ01zbjZhRUYyV2Q0cWlQTHFYVXdzcDRRUys0TzdwKzBRd0dTRkJPSVd4YmlrV3dGRUhHcEJUMWIwbW1SWHY2U0xsR09JSkxvbW1lc3hOYzVNSldsYVhLRWZrc1JNcmpSL0JDb3hnS2kvR3NjdGlDMDY0NVdDYlVMNmRFTG5BT1kvdnhhTTVqVzQ=
     delayedInitialization: 0
     cameraDeviceModeSetting: -1
-    maxSimultaneousImageTargets: 1
-    maxSimultaneousObjectTargets: 1
+    maxSimultaneousImageTargets: 2
+    maxSimultaneousObjectTargets: 2
     useDelayedLoadingObjectTargets: 0
     cameraDirection: 0
     mirrorVideoBackground: 0
@@ -27,8 +27,8 @@ MonoBehaviour:
     eyewearType: 0
     stereoFramework: 0
     seeThroughConfiguration: 0
-    viewerName: 
-    viewerManufacturer: 
+    viewerName: Generic Cardboard
+    viewerManufacturer: Vuforia
     useCustomViewer: 0
     customViewer:
       Version: 0
@@ -50,8 +50,8 @@ MonoBehaviour:
     matteShader: {fileID: 15310, guid: 0000000000000000f000000000000000, type: 0}
     videoBackgroundEnabled: 1
   deviceTracker:
-    autoInitTracker: 0
-    autoStartTracker: 0
+    autoInitTracker: 1
+    autoStartTracker: 1
     trackingMode: 0
     posePrediction: 0
     modelCorrectionMode: 0
