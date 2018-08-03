@@ -20,6 +20,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     #region PROTECTED_MEMBER_VARIABLES
 
     protected TrackableBehaviour mTrackableBehaviour;
+    public SoundOfExclamation Exclamation;
 
     #endregion // PROTECTED_MEMBER_VARIABLES
 
@@ -81,6 +82,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
+        var audioComponents = GetComponentsInChildren<AudioSource>(true);
 
         // Enable rendering:
         foreach (var component in rendererComponents)
@@ -93,6 +95,11 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         // Enable canvas':
         foreach (var component in canvasComponents)
             component.enabled = true;
+        
+        // Enable audio:
+        foreach (var component in audioComponents)
+            component.enabled = true;
+            
     }
 
 
@@ -101,6 +108,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
+        var audioComponents = GetComponentsInChildren<AudioSource>(true);
 
         // Disable rendering:
         foreach (var component in rendererComponents)
@@ -112,6 +120,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
         // Disable canvas':
         foreach (var component in canvasComponents)
+            component.enabled = false;
+
+        // Disable audio:
+        foreach (var component in audioComponents)
             component.enabled = false;
     }
 
