@@ -7,6 +7,7 @@ Confidential and Proprietary - Protected under copyright and other laws.
 ==============================================================================*/
 
 using UnityEngine;
+using UnityEngine.Video;
 using Vuforia;
 
 /// <summary>
@@ -83,6 +84,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
         var audioComponents = GetComponentsInChildren<AudioSource>(true);
+        var movieComponents = GetComponentsInChildren<VideoPlayer>(true);
+
 
         // Enable rendering:
         foreach (var component in rendererComponents)
@@ -99,6 +102,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         // Enable audio:
         foreach (var component in audioComponents)
             component.enabled = true;
+
+        // Enable movie:
+        foreach (var component in movieComponents)
+            component.enabled = true;
             
     }
 
@@ -109,6 +116,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         var colliderComponents = GetComponentsInChildren<Collider>(true);
         var canvasComponents = GetComponentsInChildren<Canvas>(true);
         var audioComponents = GetComponentsInChildren<AudioSource>(true);
+        var movieComponents = GetComponentsInChildren<VideoPlayer>(true);
 
         // Disable rendering:
         foreach (var component in rendererComponents)
@@ -124,6 +132,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
         // Disable audio:
         foreach (var component in audioComponents)
+            component.enabled = false;
+
+        // Enable movie:
+        foreach (var component in movieComponents)
             component.enabled = false;
     }
 
