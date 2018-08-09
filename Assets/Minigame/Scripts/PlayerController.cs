@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
+
 	//移動のスピード
 	public float speedX;
 	public float speedZ;
@@ -67,41 +68,49 @@ public class PlayerController : MonoBehaviour {
 		if (enemyInterval >= 5.0f) {
 			GenerateEnemy ();
 		}
-
+       
 	}
 
 	//移動するためのメソッド
 	void MoveToUp(float vertical){
-		transform.Translate(0, 0, vertical * speedZ);
+        GameObject GamePlay = GameObject.Find("GamePlay");
+        GamePlay.transform.Translate(0, 0, vertical * speedZ);
 	}
 
 	void MoveToRight(float horizontal){
-		transform.Translate(horizontal * speedX, 0, 0);
+        GameObject GamePlay = GameObject.Find("GamePlay");
+        GamePlay.transform.Translate(horizontal * speedX, 0, 0);
 	}
 
 	void MoveToLeft(float horizontal){
-		transform.Translate(horizontal * speedX, 0, 0);
+        GameObject GamePlay = GameObject.Find("GamePlay");
+        GamePlay.transform.Translate(horizontal * speedX, 0, 0);
 	}
 
 	void MoveToBack(float vertical){
-		transform.Translate(0, 0, vertical * speedZ);
+        GameObject GamePlay = GameObject.Find("GamePlay");
+        GamePlay.transform.Translate(0, 0, vertical * speedZ);
 	} 
 
 	//弾を生成するためのメソッド
 	void GenerateBullet(){
+        GameObject GamePlay = GameObject.Find("GamePlay");
 		BulletInterval = 0.0f;
-		Instantiate (Bullet, transform.position, Quaternion.identity);
+        Instantiate (Bullet, GamePlay.transform.position, Quaternion.identity);
 	}
 
 	//敵を生成するためのメソッド
 	void GenerateEnemy(){
+        GameObject GamePlay = GameObject.Find("GamePlay");
 		Quaternion q = Quaternion.Euler(0, 180, 0);
 		enemyInterval = 0.0f;
 		//ランダムな場所に生成
-		Instantiate(enemy, new Vector3(Random.Range(-100, 100), transform.position.y, transform.position.z + 200),q);
-		//自身の目の前に生成
-		Instantiate(enemy, new Vector3(transform.position.x, transform.position.y, transform.position.z + 200),q);
-	}
+        GameObject Obj = (GameObject)Instantiate(enemy, new Vector3(Random.Range(-100, 100), GamePlay.transform.position.y, GamePlay.transform.position.z + 200),q);
+        Obj.transform.parent = GamePlay.transform;
+        //自身の目の前に生成
+        Obj = (GameObject)Instantiate(enemy, new Vector3(GamePlay.transform.position.x, GamePlay.transform.position.y, GamePlay.transform.position.z + 200),q);
+	    Obj.transform.parent = GamePlay.transform;
+    }
 
 	//爆発
 	void OnTriggerEnter(Collider coll) {
