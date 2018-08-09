@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class TouchController : MonoBehaviour
 {
+    GameObject TitleObjects;
+    GameObject PlayObjects;
+    GameObject PlayUI; 
+
+    void Start()
+    {
+        TitleObjects = GameObject.Find("Title");
+        PlayObjects = GameObject.Find("GamePlay");
+        PlayUI = GameObject.Find("UIPlane");
+        PlayObjects.SetActive(false);
+        PlayUI.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -30,24 +43,24 @@ public class TouchController : MonoBehaviour
                 //Rayが当たったオブジェクトのtagがGameScreenだったら
                 if (hit.collider.tag == "GameScreen")
                 {
-                    Debug.Log("Click GameScreen");
-                    Debug.Log(hit.collider.gameObject);
+                    TitleObjects.SetActive(false);
+                    PlayObjects.SetActive(true);
+                    PlayUI.SetActive(true);
 
-                    GameObject Marker = hit.collider.gameObject;
+                    //foreach (var component in CanvasComponents)
+                    //{
+                        //if (component.enabled == false)
+                        //{
+                        //    component.enabled = true;
+                        //    Debug.Log("true");
+                        //}else if (component.enabled == true)
+                        //{
+                        //    component.enabled = false;
+                        //    Debug.Log("false");
+                        //}
+                    //}
 
-                    var CanvasComponents = Marker.GetComponentsInChildren<Canvas>(true);
-                    foreach (var component in CanvasComponents)
-                    {
-                        if (component.enabled == false)
-                        {
-                            component.enabled = true;
-                            Debug.Log("true");
-                        }else if (component.enabled == true)
-                        {
-                            component.enabled = false;
-                            Debug.Log("false");
-                        }
-                    }
+
                 }
             }
         }
