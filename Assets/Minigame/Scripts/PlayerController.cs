@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour {
 	public float speedX;
 	public float speedZ;
 
-	//弾
+	////弾
 	public GameObject Bullet;
-	float BulletInterval;
+	public float BulletInterval;
 
 	//敵
 	public GameObject enemy;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//弾のインターバル
+		////弾のインターバル
 		BulletInterval = 0;
 		//敵のインターバル
 		enemyInterval = 0;
@@ -39,29 +39,29 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
 		//移動
-		float vertical = Input.GetAxis("Vertical");
-		float horizontal = Input.GetAxis("Horizontal");
+		//float vertical = Input.GetAxis("Vertical");
+		//float horizontal = Input.GetAxis("Horizontal");
 
-		if (Input.GetKey ("up")) {
-			MoveToUp (vertical);
-		}
-		if (Input.GetKey ("right")) {
-			MoveToLeft (horizontal);
-		}
-		if (Input.GetKey ("left")) {
-			MoveToLeft (horizontal);
-		}
-		if (Input.GetKey ("down")) {
-			MoveToBack (vertical); 
-		}
+		//if (Input.GetKey ("up")) {
+		//	MoveToUp (vertical);
+		//}
+		//if (Input.GetKey ("right")) {
+		//	MoveToRight (horizontal);
+		//}
+		//if (Input.GetKey ("left")) {
+		//	MoveToLeft (horizontal);
+		//}
+		//if (Input.GetKey ("down")) {
+		//	MoveToBack (vertical); 
+		//}
 
-		//弾の生成
-		BulletInterval += Time.deltaTime;
-		if (Input.GetKey ("space")) {
-			if (BulletInterval >= 0.8f) {
-				GenerateBullet ();
-			}
-		}
+        //弾の生成
+        //BulletInterval += Time.deltaTime;
+        //if (Input.GetKey ("space")) {
+        //	if (BulletInterval >= 0.8f) {
+        //		GenerateBullet ();
+        //	}
+        //}
 
 		//敵の生成
 		enemyInterval += Time.deltaTime;
@@ -71,33 +71,33 @@ public class PlayerController : MonoBehaviour {
        
 	}
 
-	//移動するためのメソッド
-	void MoveToUp(float vertical){
-        GameObject GamePlay = GameObject.Find("GamePlay");
-        GamePlay.transform.Translate(0, 0, vertical * speedZ);
-	}
+	////移動するためのメソッド
+	//void MoveToUp(float vertical){
+ //       GameObject GamePlay = GameObject.Find("GamePlay");
+ //       GamePlay.transform.Translate(0, 0, vertical * speedZ);
+	//}
 
-	void MoveToRight(float horizontal){
-        GameObject GamePlay = GameObject.Find("GamePlay");
-        GamePlay.transform.Translate(horizontal * speedX, 0, 0);
-	}
+	//void MoveToRight(float horizontal){
+ //       GameObject GamePlay = GameObject.Find("GamePlay");
+ //       GamePlay.transform.Translate(horizontal * speedX, 0, 0);
+	//}
 
-	void MoveToLeft(float horizontal){
-        GameObject GamePlay = GameObject.Find("GamePlay");
-        GamePlay.transform.Translate(horizontal * speedX, 0, 0);
-	}
+	//void MoveToLeft(float horizontal){
+ //       GameObject GamePlay = GameObject.Find("GamePlay");
+ //       GamePlay.transform.Translate(horizontal * speedX, 0, 0);
+	//}
 
-	void MoveToBack(float vertical){
-        GameObject GamePlay = GameObject.Find("GamePlay");
-        GamePlay.transform.Translate(0, 0, vertical * speedZ);
-	} 
+	//void MoveToBack(float vertical){
+ //       GameObject GamePlay = GameObject.Find("GamePlay");
+ //       GamePlay.transform.Translate(0, 0, vertical * speedZ);
+	//} 
 
 	//弾を生成するためのメソッド
-	void GenerateBullet(){
-        GameObject GamePlay = GameObject.Find("GamePlay");
-		BulletInterval = 0.0f;
-        Instantiate (Bullet, GamePlay.transform.position, Quaternion.identity);
-	}
+    //public void GenerateBullet(){
+            //GameObject GamePlay = GameObject.Find("GamePlay");
+            //BulletInterval = 0.0f;
+            //GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
+	//}
 
 	//敵を生成するためのメソッド
 	void GenerateEnemy(){
