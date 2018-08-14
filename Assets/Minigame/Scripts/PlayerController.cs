@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
+
+    ObjectManager ObjectManager;
+    ScoreController ScoreController;
+
+    GameObject GamePlay;
+    GameObject Player;
 
 	//移動のスピード
 	public float speedX;
@@ -20,88 +25,42 @@ public class PlayerController : MonoBehaviour {
 	public GameObject explosion;
 
 	//Sliderと体力
-	Slider slider;
-	int playerLife;
+	public Slider slider;
+	public int playerLife;
+    public int maxValue;
 
 	// Use this for initialization
 	void Start () {
-		////弾のインターバル
-		BulletInterval = 0;
-		//敵のインターバル
-		enemyInterval = 0;
-		//体力の設定
-		playerLife = 30;
-		//スライダーコンポーネントを取得
-		slider = GameObject.Find ("Slider").GetComponent<Slider> ();
+        //スライダーの最大値をplayerLifeに合わせる
+        maxValue = 10;
+        //体力の設定
+        playerLife = maxValue;
+        ////弾のインターバル
+        BulletInterval = 0;
+        //敵のインターバル
+        enemyInterval = 0;
+        //ハイスコア更新
+        ScoreController = GameObject.Find("ARCamera").GetComponent<ScoreController>();
+        //スライダーコンポーネントを取得
+        slider = GameObject.Find("Slider").GetComponent<Slider> ();
+        //スライダーの最大値をplayerLifeに合わせる
+        slider.maxValue = playerLife;
+
+        GamePlay = GameObject.Find("GamePlay");
+        Player = GameObject.Find("Player");
 	}
 
 	// Update is called once per frame
 	void Update () {
-
-		//移動
-		//float vertical = Input.GetAxis("Vertical");
-		//float horizontal = Input.GetAxis("Horizontal");
-
-		//if (Input.GetKey ("up")) {
-		//	MoveToUp (vertical);
-		//}
-		//if (Input.GetKey ("right")) {
-		//	MoveToRight (horizontal);
-		//}
-		//if (Input.GetKey ("left")) {
-		//	MoveToLeft (horizontal);
-		//}
-		//if (Input.GetKey ("down")) {
-		//	MoveToBack (vertical); 
-		//}
-
-        //弾の生成
-        //BulletInterval += Time.deltaTime;
-        //if (Input.GetKey ("space")) {
-        //	if (BulletInterval >= 0.8f) {
-        //		GenerateBullet ();
-        //	}
-        //}
-
 		//敵の生成
 		enemyInterval += Time.deltaTime;
-		if (enemyInterval >= 5.0f) {
+		if (enemyInterval >= 3f) {
 			GenerateEnemy ();
 		}
-       
 	}
-
-	////移動するためのメソッド
-	//void MoveToUp(float vertical){
- //       GameObject GamePlay = GameObject.Find("GamePlay");
- //       GamePlay.transform.Translate(0, 0, vertical * speedZ);
-	//}
-
-	//void MoveToRight(float horizontal){
- //       GameObject GamePlay = GameObject.Find("GamePlay");
- //       GamePlay.transform.Translate(horizontal * speedX, 0, 0);
-	//}
-
-	//void MoveToLeft(float horizontal){
- //       GameObject GamePlay = GameObject.Find("GamePlay");
- //       GamePlay.transform.Translate(horizontal * speedX, 0, 0);
-	//}
-
-	//void MoveToBack(float vertical){
- //       GameObject GamePlay = GameObject.Find("GamePlay");
- //       GamePlay.transform.Translate(0, 0, vertical * speedZ);
-	//} 
-
-	//弾を生成するためのメソッド
-    //public void GenerateBullet(){
-            //GameObject GamePlay = GameObject.Find("GamePlay");
-            //BulletInterval = 0.0f;
-            //GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
-	//}
 
 	//敵を生成するためのメソッド
 	void GenerateEnemy(){
-        GameObject GamePlay = GameObject.Find("GamePlay");
 		Quaternion q = Quaternion.Euler(0, 180, 0);
 		enemyInterval = 0.0f;
 		//ランダムな場所に生成
@@ -120,15 +79,11 @@ public class PlayerController : MonoBehaviour {
 			//sliderのvalueに、体力を代入する
 			slider.value = playerLife;
 			Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-			Destroy (coll.gameObject);
-			//体力が0以下になれば、戦闘機が爆発するようにする
+			
+			//体力が0以下になれば、戦闘機が消えるようにする
 			if (playerLife <= 0) {
-				Destroy (this.gameObject);
-
-				//ハイスコア更新
-				ScoreController obj = GameObject.Find ("Main Camera").GetComponent<ScoreController> ();
-				obj.SaveHighScore ();
-
+                Player.SetActive(false);
+                ScoreController.SaveHighScore();
 			}
 		}
 	}

@@ -1,14 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TouchController : MonoBehaviour
 {
-    GameObject TitleObjects;
-    GameObject PlayObjects;
-    GameObject PlayUI;
+    public GameObject TitleObjects;
+    public GameObject PlayObjects;
+    public GameObject PlayUI;
+    GameObject Player;
+    GameObject GamePlay;
 
-    PlayerController mPlayerController = new PlayerController();
+    ObjectManager ObjectManager;
+
+    Ray ray;
 
     //弾
     public GameObject Bullet;
@@ -20,13 +22,12 @@ public class TouchController : MonoBehaviour
 
     void Start()
     {
-        TitleObjects = GameObject.Find("Title");
-        PlayObjects = GameObject.Find("GamePlay");
-        PlayUI = GameObject.Find("UIPlane");
-        PlayObjects.SetActive(false);
-        PlayUI.SetActive(false);
         //弾のインターバル
         BulletInterval = 0;
+
+        ObjectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
+        GamePlay = GameObject.Find("GamePlay");
+        Player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -36,20 +37,10 @@ public class TouchController : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         float horizontal = Input.GetAxis("Horizontal");
 
-        if (Input.GetKey("up"))
-        {
-            MoveToUp(vertical);
-        }
-
-        if (Input.GetKey("down"))
-        {
-            MoveToBack(vertical);
-        }
-
         BulletInterval += Time.deltaTime;
-
+        
         //Rayの作成
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         //Rayが当たったオブジェクトの情報を入れる箱
         RaycastHit hit;
@@ -68,23 +59,19 @@ public class TouchController : MonoBehaviour
             //                  ↓Ray  ↓Rayが当たったオブジェクト ↓距離
             if (Physics.Raycast(ray, out hit, distance))
             {
-
-                Debug.Log(hit.collider.tag);
-
                 //Rayが当たったオブジェクトのtagがGameScreenだったら
                 if (hit.collider.tag == "GameScreen")
                 {
-                    TitleObjects.SetActive(false);
-                    PlayObjects.SetActive(true);
-                    PlayUI.SetActive(true);
+                    ObjectManager.GameStart();
                 }
 
                 BulletInterval += Time.deltaTime;
+
+                //Rayが当たったオブジェクトのtagがShootだったら
                 if (hit.collider.tag == "Shoot")
                 {
                     if (BulletInterval >= 0.8f)
                     {
-                        GameObject GamePlay = GameObject.Find("GamePlay");
                         BulletInterval = 0.0f;
                         Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
                         GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
@@ -92,10 +79,12 @@ public class TouchController : MonoBehaviour
                     }
                 }
 
+                //Rayが当たったオブジェクトのtagがLeftだったら
                 if (hit.collider.tag == "Left"){
                     MoveToLeft(horizontal);
                 }
 
+                //Rayが当たったオブジェクトのtagがRightだったら
                 if (hit.collider.tag == "Right"){
                     MoveToRight(horizontal);
                 }
@@ -103,33 +92,20 @@ public class TouchController : MonoBehaviour
         }
     }
 
-    //移動するためのメソッド
-    void MoveToUp(float vertical)
-    {
-        GameObject GamePlay = GameObject.Find("GamePlay");
-        GamePlay.transform.Translate(0, 0, vertical * speedZ);
-    }
-
+    //右移動するためのメソッド
     void MoveToRight(float horizontal)
     {
-        GameObject Player = GameObject.Find("Player");
         if(Player.transform.localPosition.x > -15){
             Player.transform.Translate(1 * speedX / 100, 0, 0);            
         }
     }
 
+    //左移動するためのメソッド
     void MoveToLeft(float horizontal)
     {
-        GameObject Player = GameObject.Find("Player");
         if (Player.transform.localPosition.x < 15)
         {
             Player.transform.Translate(-1 * speedX / 100, 0, 0);
         }
-    }
-
-    void MoveToBack(float vertical)
-    {
-        GameObject GamePlay = GameObject.Find("GamePlay");
-        GamePlay.transform.Translate(0, 0, vertical * speedZ);
     }
 }

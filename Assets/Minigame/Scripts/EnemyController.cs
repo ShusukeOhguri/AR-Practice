@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class EnemyController : MonoBehaviour {
 
@@ -19,6 +18,8 @@ public class EnemyController : MonoBehaviour {
 	void Start () {
 		//intervalの初期値の設定
 		interval = 0;
+        //敵を30秒後に削除する
+        Destroy(this.gameObject,30);
 	}
 
 	// Update is called once per frame
@@ -31,7 +32,7 @@ public class EnemyController : MonoBehaviour {
 
 		//弾を撃つメソッドを呼び出す
 		interval += Time.deltaTime;
-		if (interval >= 2f) {
+		if (interval >= 1f) {
 			GenerateEnemyBullet();
 		} 
 	}
@@ -39,13 +40,25 @@ public class EnemyController : MonoBehaviour {
 	//弾を撃つメソッド
 	void GenerateEnemyBullet(){
         GameObject Enemy = GameObject.Find("Enemy(Clone)");
-		Quaternion q1 = Quaternion.Euler (0, 185, 0);
-		Quaternion q2 = Quaternion.Euler (0, 175, 0);
+        GameObject Player = GameObject.Find("Player");
+
+        Quaternion q1 = Quaternion.Euler(0, 180, 0);
+		//Quaternion q2 = Quaternion.Euler (0, 185, 0);
+		//Quaternion q3 = Quaternion.Euler (0, 175, 0);
+        //Quaternion q4 = Quaternion.Euler(5, 180, 0);
+        //Quaternion q5 = Quaternion.Euler(-5, 180, 0);
+       
 		interval = 0;
-        GameObject Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x - 1, transform.position.y, transform.position.z), q1);
+        GameObject Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), q1);
         Obj.transform.parent = Enemy.transform;
-        Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z), q2);
-        Obj.transform.parent = Enemy.transform;
+        //Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z), q2);
+        //Obj.transform.parent = Enemy.transform;
+        //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), q3);
+        //Obj.transform.parent = Enemy.transform;
+        ////Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), q4);
+        ////Obj.transform.parent = Enemy.transform;
+        //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), q5);
+        //Obj.transform.parent = Enemy.transform;
     } 
 
 	//衝突判定・爆発
@@ -55,7 +68,7 @@ public class EnemyController : MonoBehaviour {
 			Destroy (this.gameObject);
 			Destroy (coll.gameObject);
 			//スコアの加算
-			ScoreController obj = GameObject.Find ("Main Camera").GetComponent<ScoreController>();
+            ScoreController obj = GameObject.Find ("ARCamera").GetComponent<ScoreController>();
 			obj.ScorePlus ();
 		}
 	}

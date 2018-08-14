@@ -1,27 +1,35 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; 
 
 public class ScoreController : MonoBehaviour {
-
+    
 	public Text scoreText;
 	public Text HighScore;
 	int score;
 
+    GameObject GamePlay;
+    GameObject Title;
+    GameObject PlayUI;
+
+    ObjectManager ObjectManager;
+
 	void Start() {
 		score = 0;
-
-		if (SceneManager.GetActiveScene ().name == "Title") {
-			HighScore.text = "High Score: " + PlayerPrefs.GetInt ("HighScore");
-		}
+        ObjectManager = GameObject.Find("ObjectManager").GetComponent<ObjectManager>();
+        GamePlay = GetComponent<TouchController>().PlayObjects;
+        Title = GetComponent<TouchController>().TitleObjects;
+        PlayUI = GetComponent<TouchController>().PlayUI;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (SceneManager.GetActiveScene().name == "main") {
+        if (GamePlay.activeInHierarchy == true){
 			scoreText.text = "Score: " + score;
 		}
+
+        if (Title.activeInHierarchy == true){
+            HighScore.text = "High Score: " + PlayerPrefs.GetInt("HighScore");
+        }
 	}
 
 	public void ScorePlus() {
@@ -38,9 +46,13 @@ public class ScoreController : MonoBehaviour {
 		Invoke ("ReturnTitle", 2.0f);
 	}
 
-	//タイトルに戻るメソッド
-	void ReturnTitle() {
-		SceneManager.LoadScene ("Title");
-	}
-
+    //タイトルに戻るメソッド
+    void ReturnTitle()
+    {
+        score = 0;
+        GamePlay.SetActive(false);
+        PlayUI.SetActive(false);
+        Title.SetActive(true);
+        ObjectManager.ResetGame();
+    }
 }
