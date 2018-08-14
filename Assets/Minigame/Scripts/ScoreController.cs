@@ -50,9 +50,9 @@ public class ScoreController : MonoBehaviour {
     void ReturnTitle()
     {
         score = 0;
+        ObjectManager.ResetGame();
         GamePlay.SetActive(false);
         PlayUI.SetActive(false);
         Title.SetActive(true);
-        ObjectManager.ResetGame();
     }
 }

@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
 
     GameObject GamePlay;
     GameObject Player;
+    GameObject Enemies;
+    GameObject Effects;
 
 	//移動のスピード
 	public float speedX;
@@ -30,12 +32,7 @@ public class PlayerController : MonoBehaviour {
     public int maxValue;
 
 	// Use this for initialization
-	void Start () {
-        //スライダーの最大値をplayerLifeに合わせる
-        maxValue = 10;
-        //体力の設定
-        playerLife = maxValue;
-        ////弾のインターバル
+    void Start () {
         BulletInterval = 0;
         //敵のインターバル
         enemyInterval = 0;
@@ -44,14 +41,25 @@ public class PlayerController : MonoBehaviour {
         //スライダーコンポーネントを取得
         slider = GameObject.Find("Slider").GetComponent<Slider> ();
         //スライダーの最大値をplayerLifeに合わせる
-        slider.maxValue = playerLife;
+        //slider.maxValue = playerLife;
 
         GamePlay = GameObject.Find("GamePlay");
         Player = GameObject.Find("Player");
+        Enemies = GameObject.Find("Enemies");
+        Effects = GameObject.Find("Effects");
 	}
 
-	// Update is called once per frame
-	void Update () {
+    private void OnEnable()
+    {
+        //スライダーの最大値をplayerLifeに合わせる
+        maxValue = 10;
+        //体力の設定
+        playerLife = maxValue;
+        ////弾のインターバル
+    }
+
+    // Update is called once per frame
+    void Update () {
 		//敵の生成
 		enemyInterval += Time.deltaTime;
 		if (enemyInterval >= 3f) {
@@ -64,11 +72,11 @@ public class PlayerController : MonoBehaviour {
 		Quaternion q = Quaternion.Euler(0, 180, 0);
 		enemyInterval = 0.0f;
 		//ランダムな場所に生成
-        GameObject Obj = (GameObject)Instantiate(enemy, new Vector3(Random.Range(-100, 100), GamePlay.transform.position.y, GamePlay.transform.position.z + 200),q);
-        Obj.transform.parent = GamePlay.transform;
+        GameObject Enemy = (GameObject)Instantiate(enemy, new Vector3(Random.Range(-100, 100), Enemies.transform.position.y, Enemies.transform.position.z + 200),q);
+        Enemy.transform.parent = Enemies.transform;
         //自身の目の前に生成
-        Obj = (GameObject)Instantiate(enemy, new Vector3(GamePlay.transform.position.x, GamePlay.transform.position.y, GamePlay.transform.position.z + 200),q);
-	    Obj.transform.parent = GamePlay.transform;
+        Enemy = (GameObject)Instantiate(enemy, new Vector3(Enemies.transform.position.x, Enemies.transform.position.y, Enemies.transform.position.z + 200),q);
+        Enemy.transform.parent = Enemies.transform;
     }
 
 	//爆発
@@ -78,8 +86,9 @@ public class PlayerController : MonoBehaviour {
 			playerLife--;
 			//sliderのvalueに、体力を代入する
 			slider.value = playerLife;
-			Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-			
+            GameObject Effect = (GameObject)Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            Effect.transform.parent = Effects.transform;
+
 			//体力が0以下になれば、戦闘機が消えるようにする
 			if (playerLife <= 0) {
                 Player.SetActive(false);

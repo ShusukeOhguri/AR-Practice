@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour {
 
 	//爆発
 	public GameObject explosion;
+    GameObject Effects;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +21,7 @@ public class EnemyController : MonoBehaviour {
 		interval = 0;
         //敵を30秒後に削除する
         Destroy(this.gameObject,30);
+        Effects = GameObject.Find("Effects");
 	}
 
 	// Update is called once per frame
@@ -40,7 +42,7 @@ public class EnemyController : MonoBehaviour {
 	//弾を撃つメソッド
 	void GenerateEnemyBullet(){
         GameObject Enemy = GameObject.Find("Enemy(Clone)");
-        GameObject Player = GameObject.Find("Player");
+        //GameObject Player = GameObject.Find("Player");
 
         Quaternion q1 = Quaternion.Euler(0, 180, 0);
 		//Quaternion q2 = Quaternion.Euler (0, 185, 0);
@@ -64,9 +66,10 @@ public class EnemyController : MonoBehaviour {
 	//衝突判定・爆発
 	void OnTriggerEnter(Collider coll) {
 		if (coll.gameObject.tag == "PlayerBullet") {
-			Instantiate (explosion, transform.position, Quaternion.identity);
-			Destroy (this.gameObject);
-			Destroy (coll.gameObject);
+            GameObject Effect = (GameObject)Instantiate (explosion, transform.position, Quaternion.identity);
+            Effect.transform.parent = Effects.transform;
+            Destroy (this.gameObject);
+            Destroy (coll.gameObject);
 			//スコアの加算
             ScoreController obj = GameObject.Find ("ARCamera").GetComponent<ScoreController>();
 			obj.ScorePlus ();
