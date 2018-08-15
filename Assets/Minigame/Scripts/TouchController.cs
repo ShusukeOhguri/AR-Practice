@@ -38,7 +38,7 @@ public class TouchController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         BulletInterval += Time.deltaTime;
-        
+
         //Rayの作成
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -53,12 +53,13 @@ public class TouchController : MonoBehaviour
 
         //もしRayにオブジェクトが衝突したら
         //                  ↓Ray  ↓Rayが当たったオブジェクト ↓距離
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             // 処理
             //                  ↓Ray  ↓Rayが当たったオブジェクト ↓距離
             if (Physics.Raycast(ray, out hit, distance))
             {
+                Debug.Log(hit.collider.tag);
                 //Rayが当たったオブジェクトのtagがGameScreenだったら
                 if (hit.collider.tag == "GameScreen")
                 {
@@ -72,23 +73,36 @@ public class TouchController : MonoBehaviour
                 {
                     if (BulletInterval >= 0.8f)
                     {
-                        BulletInterval = 0.0f;
-                        Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
-                        GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
-                        PlayerBullet.transform.parent = GamePlay.transform;
+                        //BulletInterval = 0.0f;
+                        //Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
+                        //GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
+                        //PlayerBullet.transform.parent = GamePlay.transform;
+                        BulletShoot();
                     }
                 }
 
                 //Rayが当たったオブジェクトのtagがLeftだったら
-                if (hit.collider.tag == "Left"){
+                if (hit.collider.tag == "Left")
+                {
                     MoveToLeft(horizontal);
                 }
 
                 //Rayが当たったオブジェクトのtagがRightだったら
-                if (hit.collider.tag == "Right"){
+                if (hit.collider.tag == "Right")
+                {
                     MoveToRight(horizontal);
                 }
             }
+        }
+    }
+
+   void BulletShoot(){
+        if (BulletInterval >= 0.8f)
+        {
+            BulletInterval = 0.0f;
+            Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
+            GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
+            PlayerBullet.transform.parent = GamePlay.transform;
         }
     }
 
