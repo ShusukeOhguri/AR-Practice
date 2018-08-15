@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400000}
   - component: {fileID: 19800000}
+  - component: {fileID: 114530271862177404}
   - component: {fileID: 19900000}
   m_Layer: 10
   m_Name: Explosion01b
@@ -9240,3 +9241,14 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabAsset: 1
+--- !u!114 &114530271862177404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94a938dbf7e14e0799fb462847e9937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

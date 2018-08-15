@@ -29,8 +29,11 @@ public class EnemyController : MonoBehaviour {
         GameObject GamePlay = GameObject.Find("GamePlay");
 
 		//敵の移動
-        //transform.Translate (-1 * GamePlay.transform.up * Time.deltaTime * speed);
         transform.Translate(new Vector3(0, 0, 1 * Time.deltaTime * speed));
+
+        if (this.gameObject.transform.localPosition.z < -1000){
+            Destroy(this.gameObject);
+        }
 
 		//弾を撃つメソッドを呼び出す
 		interval += Time.deltaTime;
@@ -68,8 +71,8 @@ public class EnemyController : MonoBehaviour {
 		if (coll.gameObject.tag == "PlayerBullet") {
             GameObject Effect = (GameObject)Instantiate (explosion, transform.position, Quaternion.identity);
             Effect.transform.parent = Effects.transform;
-            Destroy (this.gameObject);
-            Destroy (coll.gameObject);
+            Destroy(this.gameObject);
+            Destroy(coll.gameObject);
 			//スコアの加算
             ScoreController obj = GameObject.Find ("ARCamera").GetComponent<ScoreController>();
 			obj.ScorePlus ();
