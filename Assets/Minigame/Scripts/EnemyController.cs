@@ -54,7 +54,7 @@ public class EnemyController : MonoBehaviour {
         //Quaternion q5 = Quaternion.Euler(-5, 180, 0);
        
 		interval = 0;
-        GameObject Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), q1);
+        GameObject Obj = Instantiate (enemyBullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), q1);
         Obj.transform.parent = Enemy.transform;
         //Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z), q2);
         //Obj.transform.parent = Enemy.transform;
