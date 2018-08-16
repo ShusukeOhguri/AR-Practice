@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour {
         enemyInterval = 0.0f;
 		Quaternion q = Quaternion.Euler(0, 180, 0);
         Quaternion EnemyRotation = Player.transform.rotation * q;
-        Vector3 GeneratePosition = new Vector3(Random.Range(-35,35), Enemies.transform.localPosition.y, Enemies.transform.localPosition.z + 100);
+        Vector3 GeneratePosition = new Vector3(Random.Range(-35,35), Enemies.transform.localPosition.y, Enemies.transform.localPosition.z + 75);
 		//ランダムな場所に生成
 
         GameObject Enemy = (GameObject)Instantiate(enemy, GeneratePosition, EnemyRotation);
