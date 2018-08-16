@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
+    GameObject Enemy;
+    GameObject GamePlay;
 
 	//敵の移動スピード
 	float speed = 0.1f;
@@ -10,6 +12,7 @@ public class EnemyController : MonoBehaviour {
 
 	//弾
 	public GameObject enemyBullet;
+    Quaternion Bulletdirection;
 
 	//爆発
 	public GameObject explosion;
@@ -22,12 +25,12 @@ public class EnemyController : MonoBehaviour {
         //敵を30秒後に削除する
         Destroy(this.gameObject,30);
         Effects = GameObject.Find("Effects");
+        Enemy = GameObject.Find("Enemy(Clone)");
+        GamePlay = GameObject.Find("GamePlay");
 	}
     
 	// Update is called once per frame
 	void Update () {
-        GameObject GamePlay = GameObject.Find("GamePlay");
-
 		//敵の移動
         transform.Translate(0, 0, 1 * Time.deltaTime * speed);
 
@@ -44,29 +47,39 @@ public class EnemyController : MonoBehaviour {
 
 	//弾を撃つメソッド
 	void GenerateEnemyBullet(){
-        GameObject Enemy = GameObject.Find("Enemy(Clone)");
-
+        Enemy = GameObject.Find("Enemy(Clone)");
+        interval = 0;
         //Quaternion q1 = Quaternion.Euler(0, 180, 0);
-		//Quaternion q2 = Quaternion.Euler (0, 185, 0);
-		//Quaternion q3 = Quaternion.Euler (0, 175, 0);
+        Quaternion q2 = Quaternion.Euler (0, 20, 0);
+        Quaternion q3 = Quaternion.Euler (0, -20, 0);
         //Quaternion q4 = Quaternion.Euler(5, 180, 0);
         //Quaternion q5 = Quaternion.Euler(-5, 180, 0);
 
-        Quaternion BulletRotation = Enemy.transform.rotation;
-       
-		interval = 0;
-        GameObject Obj = Instantiate (enemyBullet, new Vector3 (this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), BulletRotation);
+        int ShootingPatarn = Random.Range(0, 3);
+        Debug.Log(ShootingPatarn);
+        if (ShootingPatarn == 0)
+        {
+            Bulletdirection = Enemy.transform.rotation;
+            BulletShoot(Bulletdirection);
+        }
+        else if (ShootingPatarn == 1)
+        {
+            Bulletdirection = q2 * Enemy.transform.rotation;
+            BulletShoot(Bulletdirection);
+        }else if(ShootingPatarn == 2)
+        {
+            Bulletdirection = q3 * Enemy.transform.rotation;
+            BulletShoot(Bulletdirection);
+        }
+        //Quaternion BulletRotation = Enemy.transform.rotation;
+
+    } 
+
+    void BulletShoot(Quaternion direction){
+        GameObject Obj = Instantiate(enemyBullet, transform.position, direction);
         Obj.transform.parent = Enemy.transform;
         Obj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
-        //Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z), q2);
-        //Obj.transform.parent = Enemy.transform;
-        //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), q3);
-        //Obj.transform.parent = Enemy.transform;
-        //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), q4);
-        //Obj.transform.parent = Enemy.transform;
-        //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), q5);
-        //Obj.transform.parent = Enemy.transform;
-    } 
+    }
 
 	//衝突判定・爆発
 	void OnTriggerEnter(Collider coll) {

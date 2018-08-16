@@ -7,8 +7,10 @@ public class TouchController : MonoBehaviour
     public GameObject PlayUI;
     GameObject Player;
     GameObject GamePlay;
+    GameObject PlayerBullet;
 
     ObjectManager ObjectManager;
+    Quaternion PlayerDirection;
 
     Ray ray;
 
@@ -72,7 +74,7 @@ public class TouchController : MonoBehaviour
                 {
                     if (BulletInterval >= 1.5f)
                     {
-                        BulletShoot();
+                        SetBulletDirection();
                     }
                 }
 
@@ -101,7 +103,6 @@ public class TouchController : MonoBehaviour
                 ray = Camera.main.ScreenPointToRay(myTouches[i].position);
                 //Rayの可視化    ↓Rayの原点　　　　↓Rayの方向　　　　　　　　　↓Rayの色
                 Debug.DrawLine(ray.origin, ray.direction * distance, Color.yellow);
-
                 if (Physics.Raycast(ray, out hit, distance))
                 {
                     Debug.Log(hit.collider.tag);
@@ -118,7 +119,7 @@ public class TouchController : MonoBehaviour
                     {
                         if (BulletInterval >= 1.5f)
                         {
-                            BulletShoot();
+                            SetBulletDirection();
                         }
                     }
 
@@ -139,15 +140,25 @@ public class TouchController : MonoBehaviour
         #endif
     }
 
-   void BulletShoot(){
+   void SetBulletDirection(){
         if (BulletInterval >= 0.8f)
         {
             BulletInterval = 0.0f;
-            Quaternion PlayerRotation = Player.transform.rotation;
-            GameObject PlayerBullet = (GameObject)Instantiate(Bullet, Player.transform.position, PlayerRotation);
-            PlayerBullet.transform.parent = GamePlay.transform;
-            PlayerBullet.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            Quaternion q2 = Quaternion.Euler(0, 20, 0);
+            Quaternion q3 = Quaternion.Euler(0, -20, 0);
+            PlayerDirection = Player.transform.rotation;
+            BulletShoot(PlayerDirection);
+            PlayerDirection = q2 * Player.transform.rotation;
+            BulletShoot(PlayerDirection);
+            PlayerDirection = q3 * Player.transform.rotation;
+            BulletShoot(PlayerDirection);
         }
+    }
+
+    void BulletShoot(Quaternion Direction){
+        PlayerBullet = (GameObject)Instantiate(Bullet, Player.transform.position, Direction);
+        PlayerBullet.transform.parent = GamePlay.transform;
+        PlayerBullet.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
     }
 
     //右移動するためのメソッド
