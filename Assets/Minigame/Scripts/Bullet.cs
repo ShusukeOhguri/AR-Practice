@@ -13,6 +13,6 @@ public class Bullet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//弾を移動
-		transform.Translate (transform.forward * Time.deltaTime * speed);
+        transform.Translate(0, 0, 1 * Time.deltaTime * speed);
 	}
 }

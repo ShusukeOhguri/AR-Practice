@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
     ObjectManager ObjectManager;
     ScoreController ScoreController;
 
+    public GameObject Marker;
     GameObject GamePlay;
     GameObject Player;
     GameObject Enemies;
@@ -69,14 +70,22 @@ public class PlayerController : MonoBehaviour {
 
 	//敵を生成するためのメソッド
 	void GenerateEnemy(){
+        enemyInterval = 0.0f;
 		Quaternion q = Quaternion.Euler(0, 180, 0);
-		enemyInterval = 0.0f;
+        Quaternion EnemyRotation = Player.transform.rotation * q;
+        Vector3 GeneratePosition = new Vector3(Random.Range(-35,35), Enemies.transform.localPosition.y, Enemies.transform.localPosition.z + 100);
 		//ランダムな場所に生成
-        GameObject Enemy = (GameObject)Instantiate(enemy, new Vector3(Random.Range(-100, 100), Enemies.transform.position.y, Enemies.transform.position.z + 200),q);
+
+        GameObject Enemy = (GameObject)Instantiate(enemy, GeneratePosition, EnemyRotation);
         Enemy.transform.parent = Enemies.transform;
+        Enemy.gameObject.transform.localPosition = GeneratePosition;
+        Enemy.transform.localScale = new Vector3(1, 1, 1);
         //自身の目の前に生成
-        Enemy = (GameObject)Instantiate(enemy, new Vector3(Enemies.transform.position.x, Enemies.transform.position.y, Enemies.transform.position.z + 200),q);
-        Enemy.transform.parent = Enemies.transform;
+        //GeneratePosition = new Vector3(Enemies.transform.localPosition.y, Enemies.transform.localPosition.y, Enemies.transform.localPosition.z + 100);
+        //Enemy = (GameObject)Instantiate(enemy, GeneratePosition, EnemyRotation);
+        //Enemy.transform.parent = Enemies.transform;
+        //Enemy.gameObject.transform.localPosition = GeneratePosition;
+        //Enemy.transform.localScale = new Vector3(1, 1, 1);
     }
 
 	//爆発
@@ -88,6 +97,7 @@ public class PlayerController : MonoBehaviour {
 			slider.value = playerLife;
             GameObject Effect = (GameObject)Instantiate(explosion, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
             Effect.transform.parent = Effects.transform;
+            Effect.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
 			//体力が0以下になれば、戦闘機が消えるようにする
 			if (playerLife <= 0) {

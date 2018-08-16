@@ -3,7 +3,7 @@
 public class EnemyController : MonoBehaviour {
 
 	//敵の移動スピード
-	float speed = 25.0f;
+	float speed = 0.1f;
 
 	//弾を撃つ間隔をあける
 	float interval; 
@@ -23,15 +23,15 @@ public class EnemyController : MonoBehaviour {
         Destroy(this.gameObject,30);
         Effects = GameObject.Find("Effects");
 	}
-
+    
 	// Update is called once per frame
 	void Update () {
         GameObject GamePlay = GameObject.Find("GamePlay");
 
 		//敵の移動
-        transform.Translate(new Vector3(0, 0, 1 * Time.deltaTime * speed));
+        transform.Translate(0, 0, 1 * Time.deltaTime * speed);
 
-        if (this.gameObject.transform.localPosition.z < -1000){
+        if (this.gameObject.transform.localPosition.z < -10){
             Destroy(this.gameObject);
         }
 
@@ -45,23 +45,25 @@ public class EnemyController : MonoBehaviour {
 	//弾を撃つメソッド
 	void GenerateEnemyBullet(){
         GameObject Enemy = GameObject.Find("Enemy(Clone)");
-        //GameObject Player = GameObject.Find("Player");
 
-        Quaternion q1 = Quaternion.Euler(0, 180, 0);
+        //Quaternion q1 = Quaternion.Euler(0, 180, 0);
 		//Quaternion q2 = Quaternion.Euler (0, 185, 0);
 		//Quaternion q3 = Quaternion.Euler (0, 175, 0);
         //Quaternion q4 = Quaternion.Euler(5, 180, 0);
         //Quaternion q5 = Quaternion.Euler(-5, 180, 0);
+
+        Quaternion BulletRotation = Enemy.transform.rotation;
        
 		interval = 0;
-        GameObject Obj = Instantiate (enemyBullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), q1);
+        GameObject Obj = Instantiate (enemyBullet, new Vector3 (this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z), BulletRotation);
         Obj.transform.parent = Enemy.transform;
+        Obj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         //Obj = (GameObject)Instantiate (enemyBullet, new Vector3 (transform.position.x + 1, transform.position.y, transform.position.z), q2);
         //Obj.transform.parent = Enemy.transform;
         //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x - 1, transform.position.y, transform.position.z), q3);
         //Obj.transform.parent = Enemy.transform;
-        ////Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), q4);
-        ////Obj.transform.parent = Enemy.transform;
+        //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), q4);
+        //Obj.transform.parent = Enemy.transform;
         //Obj = (GameObject)Instantiate(enemyBullet, new Vector3(transform.position.x + 1, transform.position.y, transform.position.z), q5);
         //Obj.transform.parent = Enemy.transform;
     } 
@@ -71,6 +73,7 @@ public class EnemyController : MonoBehaviour {
 		if (coll.gameObject.tag == "PlayerBullet") {
             GameObject Effect = (GameObject)Instantiate (explosion, transform.position, Quaternion.identity);
             Effect.transform.parent = Effects.transform;
+            Effect.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             Destroy(this.gameObject);
             Destroy(coll.gameObject);
 			//スコアの加算

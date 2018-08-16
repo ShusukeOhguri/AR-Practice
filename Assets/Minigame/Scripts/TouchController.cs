@@ -73,10 +73,6 @@ public class TouchController : MonoBehaviour
                 {
                     if (BulletInterval >= 0.8f)
                     {
-                        //BulletInterval = 0.0f;
-                        //Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
-                        //GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
-                        //PlayerBullet.transform.parent = GamePlay.transform;
                         BulletShoot();
                     }
                 }
@@ -100,16 +96,17 @@ public class TouchController : MonoBehaviour
         if (BulletInterval >= 0.8f)
         {
             BulletInterval = 0.0f;
-            Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
-            GameObject PlayerBullet = (GameObject)Instantiate(Bullet, GamePlay.transform.position, Quaternion.identity);
+            Quaternion PlayerRotation = Player.transform.rotation;
+            GameObject PlayerBullet = (GameObject)Instantiate(Bullet, Player.transform.position, PlayerRotation);
             PlayerBullet.transform.parent = GamePlay.transform;
+            PlayerBullet.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
         }
     }
 
     //右移動するためのメソッド
     void MoveToRight(float horizontal)
     {
-        if(Player.transform.localPosition.x > -15){
+        if(Player.transform.localPosition.x > -35){
             Player.transform.Translate(1 * speedX / 100, 0, 0);            
         }
     }
@@ -117,7 +114,7 @@ public class TouchController : MonoBehaviour
     //左移動するためのメソッド
     void MoveToLeft(float horizontal)
     {
-        if (Player.transform.localPosition.x < 15)
+        if (Player.transform.localPosition.x < 35)
         {
             Player.transform.Translate(-1 * speedX / 100, 0, 0);
         }
