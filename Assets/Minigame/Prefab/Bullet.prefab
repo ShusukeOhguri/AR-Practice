@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4724407130773242}
   - component: {fileID: 199369148735533744}
   - component: {fileID: 198172107556211770}
-  - component: {fileID: 114820683790450172}
   - component: {fileID: 114587514296823926}
   - component: {fileID: 65701447550908108}
   m_Layer: 10
@@ -68,30 +67,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
---- !u!114 &114820683790450172
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1722895174489544}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16e87e80e381d1941ae7a99e6c1ab87e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  takeVelocityZFromParent: 0
-  velocityZ: 40
-  lifeTime: 10
-  haveToCollide: 0
-  haveToInstantiateSomthingOnHit: 1
-  toInstantiateOnHit: {fileID: 188626, guid: 37529a8d3a3aaf7498b62309b1c015ab, type: 2}
-  haveToAssignTemporaryMaterialToHittedObject: 0
-  toAssignToHittedObject: {fileID: 0}
-  toAssignToHittedObjectDuration: 2
-  haveSpawnSound: 1
-  spawnSound: {fileID: 8300000, guid: 37084305e1d0b684abd6c123b541d415, type: 3}
-  haveHitSound: 0
-  hitSound: {fileID: 0}
 --- !u!198 &198172107556211770
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -278,7 +253,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.1412251, g: 1, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
