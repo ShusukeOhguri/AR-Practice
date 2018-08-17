@@ -52,8 +52,6 @@ public class PlayerController : MonoBehaviour {
 
     private void OnEnable()
     {
-        //スライダーの最大値をplayerLifeに合わせる
-        maxValue = 10;
         //体力の設定
         playerLife = maxValue;
         ////弾のインターバル
@@ -80,12 +78,6 @@ public class PlayerController : MonoBehaviour {
         Enemy.transform.parent = Enemies.transform;
         Enemy.gameObject.transform.localPosition = GeneratePosition;
         Enemy.transform.localScale = new Vector3(1, 1, 1);
-        //自身の目の前に生成
-        //GeneratePosition = new Vector3(Enemies.transform.localPosition.y, Enemies.transform.localPosition.y, Enemies.transform.localPosition.z + 100);
-        //Enemy = (GameObject)Instantiate(enemy, GeneratePosition, EnemyRotation);
-        //Enemy.transform.parent = Enemies.transform;
-        //Enemy.gameObject.transform.localPosition = GeneratePosition;
-        //Enemy.transform.localScale = new Vector3(1, 1, 1);
     }
 
 	//爆発

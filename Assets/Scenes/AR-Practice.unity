@@ -2083,6 +2083,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1496155219}
   - component: {fileID: 1496155220}
+  - component: {fileID: 1496155221}
   m_Layer: 0
   m_Name: ObjectManager
   m_TagString: Untagged
@@ -2119,6 +2120,20 @@ MonoBehaviour:
   PlayObjects: {fileID: 1347924307}
   PlayUI: {fileID: 1023086021}
   Player: {fileID: 55025719}
+--- !u!114 &1496155221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1496155218}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793427ef98f8c46ada40c122a78d7ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyBullet: {fileID: 1833359770642994, guid: cd686af9e81e441e6b1c12b28c8045ec,
+    type: 2}
+  explosion: {fileID: 100000, guid: 1e47e1a2302b340578c901da5181c6f1, type: 2}
 --- !u!1 &1534406714
 GameObject:
   m_ObjectHideFlags: 0
@@ -2961,7 +2976,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4147906299339926, guid: 25b56cd3390d047629efd3fddd9690fc, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.010000001
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4147906299339926, guid: 25b56cd3390d047629efd3fddd9690fc, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3024,6 +3039,16 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8c5fae4abf16a4fd191259bb9c6cf519, type: 2}
+    - target: {fileID: 114579103179998730, guid: 25b56cd3390d047629efd3fddd9690fc,
+        type: 2}
+      propertyPath: maxValue
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114579103179998730, guid: 25b56cd3390d047629efd3fddd9690fc,
+        type: 2}
+      propertyPath: playerLife
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25b56cd3390d047629efd3fddd9690fc, type: 2}
   m_IsPrefabAsset: 0

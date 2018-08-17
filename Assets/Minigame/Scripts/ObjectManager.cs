@@ -29,8 +29,11 @@ public class ObjectManager : MonoBehaviour {
 
     public void ResetGame(){
         //体力の再設定
-        mPlayerController.playerLife = 10;
+        mPlayerController.playerLife = mPlayerController.maxValue;
         mPlayerController.slider.value = mPlayerController.playerLife;
+
+        //位置の初期化
+        Player.transform.localPosition = new Vector3( 0, 7, 0);
        
         foreach (Transform child in Enemies.transform)
         {
