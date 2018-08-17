@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GameScreen
+  - ARCamera
+  - PlayerBullet
+  - EnemyBullet
+  - Shoot
+  - Left
+  - Right
   layers:
   - Default
   - TransparentFX
@@ -14,11 +21,11 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
+  - AR Title
+  - AR GamePlay
+  - AR Camera
+  - AR UI
+  - invisible
   - 
   - 
   - 
@@ -38,6 +45,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Ignore Raycast
+    uniqueID: 1456211861
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer
+    uniqueID: 2331157405
     locked: 0
