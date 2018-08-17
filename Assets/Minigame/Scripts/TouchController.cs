@@ -144,20 +144,22 @@ public class TouchController : MonoBehaviour
         if (BulletInterval >= 0.8f)
         {
             BulletInterval = 0.0f;
-            Quaternion q2 = Quaternion.Euler(0, 20, 0);
-            Quaternion q3 = Quaternion.Euler(0, -20, 0);
-            PlayerDirection = Player.transform.rotation;
+            Quaternion q1 = Quaternion.Euler(0, 0, 0);
+            Quaternion q2 = Quaternion.Euler(0, 0, 20);
+            Quaternion q3 = Quaternion.Euler(0, 0, -20);
+            PlayerDirection = q1;
             BulletShoot(PlayerDirection);
-            PlayerDirection = q2 * Player.transform.rotation;
+            PlayerDirection = q2;
             BulletShoot(PlayerDirection);
-            PlayerDirection = q3 * Player.transform.rotation;
+            PlayerDirection = q3;
             BulletShoot(PlayerDirection);
         }
     }
 
     void BulletShoot(Quaternion Direction){
-        PlayerBullet = (GameObject)Instantiate(Bullet, Player.transform.position, Direction);
+        PlayerBullet = (GameObject)Instantiate(Bullet, Player.transform.position, Player.transform.rotation);
         PlayerBullet.transform.parent = GamePlay.transform;
+        PlayerBullet.transform.localRotation = Direction * PlayerBullet.transform.localRotation;
         PlayerBullet.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
     }
 

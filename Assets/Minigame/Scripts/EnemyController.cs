@@ -75,10 +75,10 @@ public class EnemyController : MonoBehaviour {
 
     } 
 
-    void BulletShoot(Quaternion direction){
+    void BulletShoot(Quaternion Direction){
         GameObject Obj = Instantiate(enemyBullet, transform.position, Enemy.transform.rotation);
         Obj.transform.parent = Enemy.transform;
-        Obj.transform.localRotation = direction * Obj.transform.localRotation;
+        Obj.transform.localRotation = Direction * Obj.transform.localRotation;
         Obj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
     }
 
