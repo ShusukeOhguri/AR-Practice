@@ -49,7 +49,7 @@ public class EnemyController : MonoBehaviour {
 	void GenerateEnemyBullet(){
         Enemy = GameObject.Find("Enemy(Clone)");
         interval = 0;
-        //Quaternion q1 = Quaternion.Euler(0, 180, 0);
+        Quaternion q1 = Quaternion.Euler(0, 0, 0);
         Quaternion q2 = Quaternion.Euler (0, 20, 0);
         Quaternion q3 = Quaternion.Euler (0, -20, 0);
         //Quaternion q4 = Quaternion.Euler(5, 180, 0);
@@ -59,16 +59,16 @@ public class EnemyController : MonoBehaviour {
         Debug.Log(ShootingPatarn);
         if (ShootingPatarn == 0)
         {
-            Bulletdirection = Enemy.transform.rotation;
+            Bulletdirection = q1;
             BulletShoot(Bulletdirection);
         }
         else if (ShootingPatarn == 1)
         {
-            Bulletdirection = q2 * Enemy.transform.rotation;
+            Bulletdirection = q2;
             BulletShoot(Bulletdirection);
         }else if(ShootingPatarn == 2)
         {
-            Bulletdirection = q3 * Enemy.transform.rotation;
+            Bulletdirection = q3;
             BulletShoot(Bulletdirection);
         }
         //Quaternion BulletRotation = Enemy.transform.rotation;
@@ -76,8 +76,9 @@ public class EnemyController : MonoBehaviour {
     } 
 
     void BulletShoot(Quaternion direction){
-        GameObject Obj = Instantiate(enemyBullet, transform.position, direction);
+        GameObject Obj = Instantiate(enemyBullet, transform.position, Enemy.transform.rotation);
         Obj.transform.parent = Enemy.transform;
+        Obj.transform.localRotation = direction * Obj.transform.localRotation;
         Obj.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
     }
 
